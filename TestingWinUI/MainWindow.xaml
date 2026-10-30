@@ -13,7 +13,32 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RowSpacing="16" Padding="0, 400, 0, 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+               
+        <StackPanel Spacing="5" Margin="0" Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+        <Button Click="Button_Click" AutomationProperties.Name="Paste" Height="40px" Width="43px">
+            <FontIcon Glyph="&#xE77F;" />
+        </Button>
+
+        <TextBox x:Name="InputBox" PlaceholderText="Insert your link" 
+                 Width="500"
+                 Height="40"
+                 FontSize="16"/>
+
+        <Button Click="Button_Input" AutomationProperties.Name="Button_input" Height="40" Width="42">
+            <FontIcon Glyph="&#xE710;"/>
+        </Button>
+    </StackPanel>
+
+        <Button Content="Play" Click="Button_Play" Height="40px" Width="595" Grid.Row="1" Grid.Column="0"/>
 
     </Grid>
 </Window>
+    

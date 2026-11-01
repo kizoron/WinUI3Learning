@@ -13,16 +13,49 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RowSpacing="16" Padding="0, 400, 0, 0">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" RowSpacing="16" Margin="0, 0, 0, 40">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="360"/>
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-               
-        <StackPanel Spacing="5" Margin="0" Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+
+        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="8" Padding="10" 
+                Grid.Row="0">
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <ListView
+                    x:Name="ListDetailListView"
+                    ItemsSource="{x:Bind Items}"
+                    SelectedIndex="0"
+                    SelectionMode="Single"
+                    Grid.Row="0"
+                    Width="200">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:ListDetailItem" >
+                                    <StackPanel Padding="4" Spacing="2">
+                                        <TextBlock Text="{x:Bind Title}" FontWeight="SemiBold" />
+                                        <TextBlock Text="{x:Bind DateCreatedFormatted}"
+                                    Style="{ThemeResource CaptionTextBlockStyle}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                    <StackPanel DataContext="{x:Bind ListDetailListView.SelectedItem, Mode=OneWay}" Grid.Column="1">
+                        <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding DateCreatedFormatted}"
+                            Style="{ThemeResource CaptionTextBlockStyle}" />
+                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                    </StackPanel>
+            </StackPanel>
+        </Border>
+
+
+
+        <StackPanel Spacing="5" Orientation="Horizontal" Grid.Row="1">
         <Button Click="Button_Click" AutomationProperties.Name="Paste" Height="40px" Width="43px">
             <FontIcon Glyph="&#xE77F;" />
         </Button>
@@ -30,14 +63,15 @@
         <TextBox x:Name="InputBox" PlaceholderText="Insert your link" 
                  Width="500"
                  Height="40"
-                 FontSize="16"/>
+                 FontSize="16"
+                 KeyDown="InputBox_KeyDown"/>
 
-        <Button Click="Button_Input" AutomationProperties.Name="Button_input" Height="40" Width="42">
+            <Button Click="Button_Input" KeyDown="InputBox_KeyDown" AutomationProperties.Name="Button_input" Height="40" Width="42" >
             <FontIcon Glyph="&#xE710;"/>
         </Button>
     </StackPanel>
 
-        <Button Content="Play" Click="Button_Play" Height="40px" Width="595" Grid.Row="1" Grid.Column="0"/>
+        <Button Content="Play" Click="Button_Play" Height="40px" Width="595" Grid.Row="2"/>
 
     </Grid>
 </Window>

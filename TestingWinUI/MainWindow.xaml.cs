@@ -7,6 +7,8 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,18 +23,29 @@ using static System.Net.Mime.MediaTypeNames;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace TestingWinUI
-{
-    /// <summary>
-
+{ ///
+    public class ListDetailItem
+    { 
+        public string Title { get; set; } 
+        public string Text { get; set; }
+        public DateTime DateCreated { get; set; } 
+        public string DateCreatedFormatted => DateCreated.ToString("MMM d, yyyy h:mm tt"); 
+    
+    }
     public sealed partial class MainWindow : Window
     {
+
+        public ObservableCollection<ListDetailItem> Items { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
             this.AppWindow.Resize(new SizeInt32(800, 600));
-        }
 
+            Items = new ObservableCollection<ListDetailItem>();
+
+        }
 
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -51,9 +64,35 @@ namespace TestingWinUI
             }
         }
 
-        private async void Button_Input(object sender, RoutedEventArgs e)
+        private void Button_Input(object sender, RoutedEventArgs e)
         {
+            AddNewItem();
+        }
+        private void InputBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                AddNewItem();
+            }
+        }
 
+        private void AddNewItem()
+        {
+            if (string.IsNullOrWhiteSpace(InputBox.Text))
+            {
+                return;
+            }
+
+            ListDetailItem NewItem = new ListDetailItem()
+            {
+                Title = Convert.ToString(Items.Count + 1),
+                Text = InputBox.Text,
+                DateCreated = DateTime.Now,
+
+            };
+
+            Items.Add(NewItem);
+            InputBox.Text = string.Empty;
         }
 
         private async void Button_Play(object sender, RoutedEventArgs e)

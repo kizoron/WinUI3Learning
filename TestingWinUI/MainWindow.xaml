@@ -23,6 +23,8 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
+        
+        <!-- stack panel -->
         <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="8" Padding="10" 
                 Grid.Row="0">
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
@@ -33,28 +35,34 @@
                     SelectionMode="Single"
                     Grid.Row="0"
                     Width="200">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="local:ListDetailItem" >
-                                    <StackPanel Padding="4" Spacing="2">
-                                        <TextBlock Text="{x:Bind Title}" FontWeight="SemiBold" />
-                                        <TextBlock Text="{x:Bind DateCreatedFormatted}"
+                       <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:ListDetailItem" >
+                                <StackPanel Padding="4" Spacing="2">
+                                    <TextBlock Text="{x:Bind VideoName}" FontWeight="SemiBold" />
+                                    <TextBlock Text="{x:Bind Author}"
                                     Style="{ThemeResource CaptionTextBlockStyle}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                </StackPanel>
+                            </DataTemplate>
+                       </ListView.ItemTemplate>
+                </ListView>
 
-                    <StackPanel DataContext="{x:Bind ListDetailListView.SelectedItem, Mode=OneWay}" Grid.Column="1">
-                        <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" />
-                        <TextBlock Text="{Binding DateCreatedFormatted}"
-                            Style="{ThemeResource CaptionTextBlockStyle}" />
-                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
-                    </StackPanel>
+                <StackPanel DataContext="{x:Bind ListDetailListView.SelectedItem, Mode=OneWay}" Grid.Column="1">
+                    <TextBlock Text="{Binding VideoName}" FontSize="20" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding Author}"
+                        Style="{ThemeResource CaptionTextBlockStyle}" />
+                    <Image Width="320" Height="180" Stretch="UniformToFill">
+                        <Image.Source>
+                            <BitmapImage UriSource="{Binding VideoImage}" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="{Binding Duration}" />
+                    <TextBlock Text="{Binding Description}" />
+                </StackPanel>
             </StackPanel>
         </Border>
 
-
-
+        
+        <!-- navigaation buttons -->
         <StackPanel Spacing="5" Orientation="Horizontal" Grid.Row="1">
         <Button Click="Button_Click" AutomationProperties.Name="Paste" Height="40px" Width="43px">
             <FontIcon Glyph="&#xE77F;" />
